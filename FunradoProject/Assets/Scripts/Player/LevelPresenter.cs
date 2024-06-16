@@ -17,14 +17,21 @@ public class LevelPresenter : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI levelText; // Lv. XX
 
-
-
     private void Start()
     {
         player = GetComponent<MainPlayer>();
         level = player.Level;
         UpdateLevelView();
         player.OnLevelChange += Level_OnLevelChange;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Book"))
+        {
+            IncreaseLevel(other.transform.GetComponent<LevelCollectableData>().levelAmount);
+            other.gameObject.SetActive(false);
+        }
     }
 
     private void Level_OnLevelChange()

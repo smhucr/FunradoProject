@@ -6,12 +6,20 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 using System.Transactions;
+using DG.Tweening.Core.Easing;
 public class GameManager : MonoBehaviour
 {
     [Header("Manager")]
     public static GameManager instance;
     [Header("UI")]
-
+    public GameObject redKey;
+    public int countOfRedKeys;
+    public TextMeshProUGUI countRedKeysText;
+    public bool isRedClaimed = false;
+    public GameObject blueKey;
+    public int countOfBlueKeys;
+    public TextMeshProUGUI countBlueKeysText;
+    public bool isBlueClaimed = false;
     [Header("Player")]
     public GameObject playerParent; // Moving Player
     public GameObject mainPlayer; // Player who has script features
@@ -46,13 +54,12 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Level", 1);
         /*if (levelText != null)
             levelText.text = ("Level " + PlayerPrefs.GetInt("Level")).ToString();*/
-        
+
         //DontDestroyOnLoad(gameObject);
     }
-
     private void Start()
     {
-
+        UpdateKeysCount();
     }
 
     public void StartGame()
@@ -67,7 +74,7 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         startGame = false;
         isMoveable = false;
-       
+
     }
 
     public void GameOver()
@@ -76,6 +83,12 @@ public class GameManager : MonoBehaviour
         startGame = false;
 
         isMoveable = false;
+    }
+
+    public void UpdateKeysCount()
+    {
+        countBlueKeysText.text = countOfBlueKeys.ToString();
+        countRedKeysText.text = countOfRedKeys.ToString();
     }
 
     public IEnumerator DisableMoveable(float duration)
