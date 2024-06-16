@@ -1,13 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainPlayer : MonoBehaviour
+public abstract class MainPlayer : MonoBehaviour
 {
     [Header("CharacterFeatures")]
     [SerializeField]
-    public int level;
-
+    private int level;
+    public event Action OnLevelChange;
+    public int Level
+    {
+        get => level;
+        set => level = value; 
+    }
 
     public enum PlayerState
     {
@@ -17,15 +23,16 @@ public class MainPlayer : MonoBehaviour
     }
     public PlayerState playerCurrentState = PlayerState.Idle;
 
-    public void Die()
+    public abstract void Die();
+    public  void IncreaseLevel(int increaseAmount)
     {
-        print("I'm Dead Bruah");
-        playerCurrentState = PlayerState.Die;
-        GameManager.instance.GameOver();
+        print("Level Increased");
+        level += increaseAmount;
+        OnLevelChange?.Invoke();
     }
 
-    public void Reborn()
+    /*public void Reborn()
     {
         //This is a ADS part
-    }
+    }*/
 }
