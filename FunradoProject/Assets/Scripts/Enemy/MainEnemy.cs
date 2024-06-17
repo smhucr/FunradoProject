@@ -7,13 +7,16 @@ public abstract class MainEnemy : MonoBehaviour
     private GameManager gameManager;
     [Header("MainPlayer")]
     public Transform playerComponentObject;
-    public Transform playerFollowObject;
     [Header("EnemyFeatures")]
     [SerializeField]
-    public float moveSpeed;
-
+    public float moveTime;
+    public float rotateInterval;
+    public bool isWalking;
+    public bool isWalkable = true;
     [Header("Animation")]
     public AnimatorData animatorData;
+    [Header("Patrol")]
+    public GameObject[] patrolPoints;
 
 
     //State Machine
@@ -47,7 +50,7 @@ public abstract class MainEnemy : MonoBehaviour
                     Idle();
                     break;
                 case EnemyState.Patrol:
-                    Chase();
+                    Patrol();
                     break;
                 case EnemyState.Attack:
                     Attack();
@@ -62,7 +65,7 @@ public abstract class MainEnemy : MonoBehaviour
     }
 
     public abstract void Idle();
-    public abstract void Chase();
+    public abstract void Patrol();
     public abstract void Attack();
     public abstract void Die();
 

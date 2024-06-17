@@ -8,6 +8,7 @@ TagManager:
   - RedKey
   - BlueKey
   - Doors
+  - Enemy
   layers:
   - Default
   - TransparentFX

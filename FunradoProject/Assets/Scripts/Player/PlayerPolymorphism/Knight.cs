@@ -37,6 +37,10 @@ public class Knight : MainPlayer
             gameManager.isBlueClaimed = true;
             gameManager.UpdateKeysCount();
         }
+        else if (other.CompareTag("Enemy"))
+        {
+            print("EnemyCollided");
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
