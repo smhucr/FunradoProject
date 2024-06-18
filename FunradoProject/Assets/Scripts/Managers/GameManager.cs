@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("Manager")]
     public static GameManager instance;
+    public ObjectsPool objectsPool;
     [Header("UI")]
     public GameObject redKey;
     public int countOfRedKeys;

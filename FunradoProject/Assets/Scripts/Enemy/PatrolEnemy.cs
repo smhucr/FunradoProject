@@ -11,17 +11,32 @@ public class PatrolEnemy : MainEnemy
     private float waitTime;
 
     private Tween idleTween;
-    
+    public bool isDead;
+
     private void Start()
     {
         isWalkable = true;
         waitTime = 4;
         nextPoint = 1;
         enemyCurrentState = EnemyState.Patrol;
+        gameManager = GameManager.instance;
+        enemyText.text = "Lv. " + enemyLevel.ToString(); // Lv. XX
+        UpdateLevelVisual();
     }
 
+    public override void UpdateLevelVisual()
+    {
+        LevelPresenter playerLevelPresenter = playerComponentObject.GetComponent<LevelPresenter>();
+        if (playerLevelPresenter.Level > enemyLevel)
+        {
+            enemyText.color = Color.green; 
+        }
+        else
+        {
+            enemyText.color = Color.red;
+        }
+    }
 
-    
     public override void Idle()
     {
         print("I am idling");
@@ -39,7 +54,7 @@ public class PatrolEnemy : MainEnemy
         if (!isWalking && isWalkable)
         {
             idleTween.Kill();
-            idleTween = null;   
+            idleTween = null;
             print("I am patrolling");
             animatorData.animator.Play(animatorData.walkAnimation);
             gameObject.transform.DOMove(patrolPoints[nextPoint].transform.position, moveTime).SetEase(Ease.Linear).OnComplete(WalkFinish);
@@ -51,7 +66,8 @@ public class PatrolEnemy : MainEnemy
     public void WalkFinish()
     {
         isWalking = false;
-        StartCoroutine(WaitForPatrolling());
+        if (gameObject.activeSelf)
+            StartCoroutine(WaitForPatrolling());
         nextPoint++;
         if (nextPoint == patrolPoints.Length)
             nextPoint = 0;
@@ -72,12 +88,24 @@ public class PatrolEnemy : MainEnemy
     }
 
 
+
     public override void Die()
     {
         print("I am dying");
         //Enemy Die Animation After Die Animation Destroy the Object
+        //animatorData.animator.Play(animatorData.deathAnimation); //NONE DeathAnimation, Therefore animation will be Hand-made
+        if (!isDead)
+        {
 
-        animatorData.animator.Play(animatorData.deathAnimation);
+            var obj = gameManager.objectsPool.GetPooledObject(0);
+            obj.transform.position = transform.position + new Vector3(0, 3, 0);
+            obj.transform.GetComponent<ParticleSystem>().Play();
+            isDead = true;
+
+
+
+            gameObject.SetActive(false);
+        }
     }
 
 

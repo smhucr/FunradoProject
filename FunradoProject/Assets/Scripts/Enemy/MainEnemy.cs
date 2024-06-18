@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public abstract class MainEnemy : MonoBehaviour
 {
-    private GameManager gameManager;
+    protected GameManager gameManager;
     [Header("MainPlayer")]
     public Transform playerComponentObject;
     [Header("EnemyFeatures")]
+    public int enemyLevel;
+    public TextMeshProUGUI enemyText;
     [SerializeField]
     public float moveTime;
     public float rotateInterval;
@@ -17,6 +20,7 @@ public abstract class MainEnemy : MonoBehaviour
     public AnimatorData animatorData;
     [Header("Patrol")]
     public GameObject[] patrolPoints;
+
 
 
     //State Machine
@@ -33,6 +37,12 @@ public abstract class MainEnemy : MonoBehaviour
     {
         playerComponentObject = GameManager.instance.mainPlayer.transform;
         gameManager = GameManager.instance;
+        playerComponentObject.GetComponent<LevelPresenter>().OnLevelIncrease += UpdateLevelVisual;
+    }
+
+    private void OnDisable()
+    {
+        playerComponentObject.GetComponent<LevelPresenter>().OnLevelIncrease -= UpdateLevelVisual;
     }
 
     private void FixedUpdate()
@@ -68,6 +78,7 @@ public abstract class MainEnemy : MonoBehaviour
     public abstract void Patrol();
     public abstract void Attack();
     public abstract void Die();
+    public abstract void UpdateLevelVisual();
 
     public void PlayIdleAnimation()
     {

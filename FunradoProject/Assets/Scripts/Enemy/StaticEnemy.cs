@@ -23,4 +23,9 @@ public class StaticEnemy : MainEnemy
     {
         throw new System.NotImplementedException();
     }
+
+    public override void UpdateLevelVisual()
+    {
+        throw new System.NotImplementedException();
+    }
 }

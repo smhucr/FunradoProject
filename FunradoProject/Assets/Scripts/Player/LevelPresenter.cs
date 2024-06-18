@@ -13,6 +13,9 @@ public class LevelPresenter : MonoBehaviour
     private MainPlayer player;
     [SerializeField]
     private int level = 0; // Customable Per Level
+
+    public int Level { get { return level; } }
+
     [Header("UI")]
     [SerializeField]
     private TextMeshProUGUI levelText; // Lv. XX
