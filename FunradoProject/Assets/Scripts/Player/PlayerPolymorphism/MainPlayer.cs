@@ -18,6 +18,7 @@ public abstract class MainPlayer : MonoBehaviour
     public enum PlayerState
     {
         Idle,
+        Attack,
         Walk,
         Die
     }

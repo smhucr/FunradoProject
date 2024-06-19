@@ -37,7 +37,8 @@ public class PlayerMovement : MonoBehaviour
             if (!Physics.Raycast(transform.position, movement, raycastDistance, ~0, QueryTriggerInteraction.Ignore))
             {
                 rb.MovePosition(transform.position + moveVector);
-                mainPlayer.playerCurrentState = MainPlayer.PlayerState.Walk;
+                if (mainPlayer.playerCurrentState != MainPlayer.PlayerState.Attack && mainPlayer.playerCurrentState != MainPlayer.PlayerState.Die)
+                    mainPlayer.playerCurrentState = MainPlayer.PlayerState.Walk;
 
                 if (playerMeshObject != null)
                 {
@@ -47,7 +48,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            mainPlayer.playerCurrentState = MainPlayer.PlayerState.Idle;
+            if (mainPlayer.playerCurrentState != MainPlayer.PlayerState.Attack && mainPlayer.playerCurrentState != MainPlayer.PlayerState.Die)
+                mainPlayer.playerCurrentState = MainPlayer.PlayerState.Idle;
         }
     }
 }

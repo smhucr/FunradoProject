@@ -40,6 +40,36 @@ public class Knight : MainPlayer
         else if (other.CompareTag("Enemy"))
         {
             print("EnemyCollided");
+            if (other.GetComponent<MainEnemy>().enemyCurrentState != MainEnemy.EnemyState.Attack)
+            {
+                playerCurrentState = PlayerState.Attack;
+                StartCoroutine(WaitForAttackAnimation(other.gameObject));
+                other.GetComponent<MainEnemy>().enemyCurrentState = MainEnemy.EnemyState.Attack;
+            }
+        }
+        else if (other.CompareTag("RedArea"))
+        {
+            if (other.transform.parent.GetComponent<MainEnemy>().enemyCurrentState != MainEnemy.EnemyState.Attack)
+            {
+                playerCurrentState = PlayerState.Attack;
+                StartCoroutine(WaitForAttackAnimation(other.transform.parent.gameObject));
+                other.transform.parent.GetComponent<MainEnemy>().enemyCurrentState = MainEnemy.EnemyState.Attack;
+
+            }
+        }
+    }
+
+    IEnumerator WaitForAttackAnimation(GameObject enemy)
+    {
+        yield return new WaitForSeconds(1.3f);
+        if (enemy.GetComponent<MainEnemy>().enemyLevel > Level)
+        {
+            playerCurrentState = PlayerState.Die;
+        }
+        else
+        {
+            enemy.GetComponent<MainEnemy>().enemyCurrentState = MainEnemy.EnemyState.Die;
+            IncreaseLevel(enemy.GetComponent<MainEnemy>().enemyLevel);
         }
     }
 

@@ -84,10 +84,11 @@ public class PatrolEnemy : MainEnemy
 
     public override void Attack()
     {
-        throw new System.NotImplementedException();
+        DOTween.KillAll();
+        animatorData.animator.Play(animatorData.attackAnimation);
+        transform.LookAt(new Vector3(playerComponentObject.transform.position.x, transform.position.y, playerComponentObject.transform.position.z));
+
     }
-
-
 
     public override void Die()
     {
@@ -104,7 +105,7 @@ public class PatrolEnemy : MainEnemy
 
 
 
-            gameObject.SetActive(false);
+            gameObject.transform.parent.gameObject.SetActive(false);
         }
     }
 
