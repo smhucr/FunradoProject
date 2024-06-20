@@ -19,8 +19,7 @@ public abstract class MainEnemy : MonoBehaviour
     public bool isWalkable = true;
     [Header("Animation")]
     public AnimatorData animatorData;
-    [Header("Patrol")]
-    public GameObject[] patrolPoints;
+    
 
 
 

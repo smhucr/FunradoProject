@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PatrolEnemy : MainEnemy
 {
+    [Header("Patrol")]
+    public GameObject[] patrolPoints;
     [SerializeField]
     private int nextPoint = 1;
     [SerializeField]
