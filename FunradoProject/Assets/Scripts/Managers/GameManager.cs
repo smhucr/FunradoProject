@@ -7,6 +7,7 @@ using TMPro;
 using System;
 using System.Transactions;
 using DG.Tweening.Core.Easing;
+using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     [Header("Manager")]
@@ -82,7 +83,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         startGame = false;
-
+        DOTween.KillAll();
         isMoveable = false;
     }
 

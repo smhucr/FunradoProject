@@ -11,7 +11,7 @@ public class PlayerAnimationController : MonoBehaviour
     private void Start()
     {
         gameManager = GameManager.instance;
-        mainPlayer = gameObject.GetComponent<MainPlayer>();
+        mainPlayer = gameObject.GetComponent<Knight>();
     }
     private void FixedUpdate()
     {
@@ -34,7 +34,7 @@ public class PlayerAnimationController : MonoBehaviour
                     Attack();
                     break;
                 case MainPlayer.PlayerState.Die:
-                    Die();
+                    mainPlayer.Die();
                     break;
             }
         }
@@ -62,8 +62,4 @@ public class PlayerAnimationController : MonoBehaviour
             mainPlayer.playerCurrentState = MainPlayer.PlayerState.Walk;
     }
 
-    private void Die()
-    {
-        animatorData.animator.Play(animatorData.deathAnimation);
-    }
 }

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -47,6 +48,8 @@ public abstract class MainEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (gameManager.isGameOver)
+            DOTween.KillAll();
         if (gameManager.isGameOver && enemyCurrentState != EnemyState.Die)
         {
             enemyCurrentState = EnemyState.Idle;

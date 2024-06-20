@@ -5,12 +5,23 @@ using UnityEngine;
 public class Knight : MainPlayer
 {
     private GameManager gameManager;
+    private bool isDead;
 
     public override void Die()
     {
-        print("I'm Dead Bruah");
-        playerCurrentState = PlayerState.Die;
-        GameManager.instance.GameOver();
+        if (!isDead)
+        {
+            print("I'm Dead Bruah");
+            playerCurrentState = PlayerState.Die;
+            var obj = gameManager.objectsPool.GetPooledObject(0);
+            obj.transform.position = transform.position + new Vector3(0, 3, 0);
+            obj.transform.GetComponent<ParticleSystem>().Play();
+            gameObject.SetActive(false);
+            isDead = true;
+            GameManager.instance.GameOver();
+
+        }
+
     }
 
     private void Awake()
