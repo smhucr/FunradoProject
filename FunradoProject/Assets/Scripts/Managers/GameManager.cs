@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
     public int countOfBlueKeys;
     public TextMeshProUGUI countBlueKeysText;
     public bool isBlueClaimed = false;
+    //Finishers
+    public GameObject winPanel;
+    public GameObject gameOverPanel;
+
     [Header("Player")]
     public GameObject playerParent; // Moving Player
     public GameObject mainPlayer; // Player who has script features
@@ -76,7 +80,8 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         startGame = false;
         isMoveable = false;
-
+        gameOverPanel.SetActive(false);
+        winPanel.SetActive(true);
     }
 
     public void GameOver()
@@ -85,7 +90,21 @@ public class GameManager : MonoBehaviour
         startGame = false;
         DOTween.KillAll();
         isMoveable = false;
+        gameOverPanel.SetActive(true);
+        winPanel.SetActive(false);
     }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+
 
     public void UpdateKeysCount()
     {

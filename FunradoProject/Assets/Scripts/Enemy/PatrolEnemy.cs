@@ -8,18 +8,18 @@ public class PatrolEnemy : MainEnemy
     [Header("Patrol")]
     public GameObject[] patrolPoints;
     [SerializeField]
-    private int nextPoint = 1;
+    private int nextPoint;
     [SerializeField]
     private float waitTime;
 
     private Tween idleTween;
+    private Tween walkTween;
     public bool isDead;
 
     private void Start()
     {
         isWalkable = true;
         waitTime = 4;
-        nextPoint = 1;
         enemyCurrentState = EnemyState.Patrol;
         gameManager = GameManager.instance;
         enemyText.text = "Lv. " + enemyLevel.ToString(); // Lv. XX
@@ -59,7 +59,7 @@ public class PatrolEnemy : MainEnemy
             idleTween = null;
             print("I am patrolling");
             animatorData.animator.Play(animatorData.walkAnimation);
-            gameObject.transform.DOMove(patrolPoints[nextPoint].transform.position, moveTime).SetEase(Ease.Linear).OnComplete(WalkFinish);
+            walkTween = gameObject.transform.DOMove(patrolPoints[nextPoint].transform.position, moveTime).SetEase(Ease.Linear).OnComplete(WalkFinish);
             gameObject.transform.LookAt(new Vector3(patrolPoints[nextPoint].transform.position.x, 0, patrolPoints[nextPoint].transform.position.z));
             isWalking = true;
         }
@@ -86,7 +86,8 @@ public class PatrolEnemy : MainEnemy
 
     public override void Attack()
     {
-        DOTween.KillAll();
+        idleTween.Kill();
+        walkTween.Kill();
         animatorData.animator.Play(animatorData.attackAnimation);
         transform.LookAt(new Vector3(playerComponentObject.transform.position.x, transform.position.y, playerComponentObject.transform.position.z));
 

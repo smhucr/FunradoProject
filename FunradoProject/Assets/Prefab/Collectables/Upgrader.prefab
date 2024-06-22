@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationDegree: {x: 0, y: 360, z: 0}
-  rotationTime: 1.25
+  rotationTime: 2
   moveDirection: 2
   moveSpeed: 1
 --- !u!114 &1976012942515464571

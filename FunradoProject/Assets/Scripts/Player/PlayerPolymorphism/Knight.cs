@@ -9,7 +9,7 @@ public class Knight : MainPlayer
 
     public override void Die()
     {
-        if (!isDead)
+        if (!isDead && !gameManager.isGameOver)
         {
             print("I'm Dead Bruah");
             playerCurrentState = PlayerState.Die;
@@ -73,15 +73,19 @@ public class Knight : MainPlayer
     IEnumerator WaitForAttackAnimation(GameObject enemy)
     {
         yield return new WaitForSeconds(1.3f);
-        if (enemy.GetComponent<MainEnemy>().enemyLevel > Level)
+        if (!gameManager.isGameOver)
         {
-            playerCurrentState = PlayerState.Die;
+            if (enemy.GetComponent<MainEnemy>().enemyLevel > Level)
+            {
+                playerCurrentState = PlayerState.Die;
+            }
+            else
+            {
+                enemy.GetComponent<MainEnemy>().enemyCurrentState = MainEnemy.EnemyState.Die;
+                IncreaseLevel(enemy.GetComponent<MainEnemy>().enemyLevel);
+            }
         }
-        else
-        {
-            enemy.GetComponent<MainEnemy>().enemyCurrentState = MainEnemy.EnemyState.Die;
-            IncreaseLevel(enemy.GetComponent<MainEnemy>().enemyLevel);
-        }
+
     }
 
     private void OnCollisionEnter(Collision collision)

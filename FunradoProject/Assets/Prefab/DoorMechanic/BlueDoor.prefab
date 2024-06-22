@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 062e8f405de37674ea00557064fca8fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isThisRedDoor: 1
-  isThisBlueDoor: 0
+  isThisRedDoor: 0
+  isThisBlueDoor: 1
 --- !u!1 &8280765074395271832
 GameObject:
   m_ObjectHideFlags: 0

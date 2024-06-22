@@ -27,7 +27,7 @@ public class StaticEnemy : MainEnemy
     }
     public override void Attack()
     {
-        DOTween.KillAll();
+        idleTween.Kill();
         animatorData.animator.Play(animatorData.attackAnimation);
         transform.LookAt(new Vector3(playerComponentObject.transform.position.x, transform.position.y, playerComponentObject.transform.position.z));
     }
